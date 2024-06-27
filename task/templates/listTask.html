@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content%}
+
+
+{% for i in tasks %}
+<div style="margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; background-color: #f9f9f9;">
+
+<p>
+Task : {{ i.head }}
+    <br>
+Description :  {{ i.desc }}
+</div>
+</p>
+{% endfor%}
+{% endblock %}
