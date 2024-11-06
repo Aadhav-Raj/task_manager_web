@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        li input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        li button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        li button:hover {
+            background-color: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task List</h1>
+    <ul id="task-list"></ul>
+
+    <script>
+        async function fetchTasks() {
+            const response = await fetch('/api/list/');
+            const tasks = await response.json();
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+            tasks.forEach(task => {
+                const taskItem = document.createElement('li');
+                taskItem.id = `task-${task.id}`;
+                taskItem.innerHTML = `
+                    <div>
+                        <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleComplete(${task.id})">
+                        <span>${task.head} - ${task.desc}</span>
+                    </div>
+                    <button onclick="deleteTask(${task.id})">Delete</button>
+                `;
+                taskList.appendChild(taskItem);
+            });
+        }
+
+        async function toggleComplete(id) {
+            const response = await fetch(`/api/complete/${id}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ completed: true })
+            });
+            if (response.ok) {
+                fetchTasks();
+            }
+        }
+
+        async function deleteTask(id) {
+            const response = await fetch(`/api/delete/${id}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                const taskItem = document.getElementById(`task-${id}`);
+                taskItem.remove();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchTasks);
+    </script>
+</body>
+</html>

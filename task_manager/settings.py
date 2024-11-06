@@ -38,9 +38,29 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    "task"
+    'rest_framework.authtoken',
+    "task.apps.TaskConfig",
+    'rest_registration'
 ]
+REST_REGISTRATION = {
+    'REGISTER_VERIFICATION_ENABLED': False,
+    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
+    'RESET_PASSWORD_VERIFICATION_ENABLED': False,
+}
+#'rest_framework_simplejwt.authentication.JWTAuthentication',
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+               'rest_framework.authentication.TokenAuthentication',
+               'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+    ),
+    #'DEFAULT_PERMISSION_CLASSES':(
+    #            'rest_framework.permissions.IsAuthenticated',
+    #),
+
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -113,6 +133,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=50),
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -122,4 +148,15 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
+#telnet smtp.gmail.com 587
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "task.User"
+FERNET_KEY=b'NQwbOC-aqiZUW8Fmm563eNUtyxHdftvV1HSU0fm29Wc='
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT="587"
+EMAIL_HOST_USER="aadhavraj0406@gmail.com"
+EMAIL_HOST_PASSWORD="kglw segi dlax kweh"
+EMAIL_USE_TLS=True

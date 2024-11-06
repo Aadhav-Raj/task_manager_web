@@ -20,10 +20,46 @@
             <li class="nav-item">
                 <a class="nav-link" href="">Home</a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="">Add Task</a>
+                <a class="nav-link" href="{% url 'list' %}">All Tasks</a>
+            </li><li class="nav-item">
+                <a class="nav-link" href="{% url 'addTask' %}">Add Task</a>
             </li>
-            <!-- Add more links as needed -->
+<!--
+            <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                <span>{{ request.user.username }}</span>
+
+                {%else%}
+                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                {% endif %}
+
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <a class="=nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% endif %}
+             Add more links as needed -->
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+                <span class="nav-link">{{ request.user.username }}</span>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>
