@@ -1,3 +1,5 @@
+#Task_Manager_web
+
 Task Manager Django Backend
 This is the backend for a Task Manager Android app, built using Django. It provides user authentication, token-based authorization, email verification, and CRUD operations for managing tasks. The backend uses SQLite as the database and integrates with Gmail SMTP for email verification.
 
