@@ -16,3 +16,6 @@ Python 3.x
 Django
 Django REST Framework
 SQLite (default database)
+
+**SQLite**
+**HTML/CSS**
